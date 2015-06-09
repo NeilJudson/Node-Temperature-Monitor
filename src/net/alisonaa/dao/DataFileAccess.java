@@ -5,7 +5,7 @@ import java.io.RandomAccessFile;
 
 import net.alisonaa.nodemodel.Node;
 
-public class DataFileAccessThread extends Thread {
+public class DataFileAccess {
 	private Node node = new Node();
 
 	public Node getNode() {
@@ -17,7 +17,6 @@ public class DataFileAccessThread extends Thread {
 		try {
 			RandomAccessFile raf = new RandomAccessFile("res/1.dat", "r");
 			while ((strTemp = raf.readLine()) != null) {
-				System.out.println(strTemp);
 				node.addData(strTemp.substring(0, 10),
 						strTemp.substring(11, 19),
 						Integer.valueOf(strTemp.substring(20)));

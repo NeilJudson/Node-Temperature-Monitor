@@ -7,63 +7,86 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import static net.alisonaa.homework3.Constants.*;
-
 public class MainInterface extends JFrame implements ActionListener {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private static final int MAIN_INTER_WIDTH = 530;
+	private static final int MAIN_INTER_HEIGHT = 450;
+
+	private static final int PANEL_BUTTON_WIDTH = 500;
+	private static final int PANEL_BUTTON_HEIGHT = 50;
+
+	private static final int BUTTON_WIDTH = 90;
+	private static final int BUTTON_HEIGHT = 30;
+
+	static final int PANEL_GRAPH_WIDTH = 500;
+	static final int PANEL_GRAPH_HEIGHT = 350;
+
 	private JPanel panelButton;
-	private JButton butBarGraph;
+	private JButton butLineGraph;
 	private JButton butPieGraph;
 
 	private JPanel panelGraph;
 
 	public MainInterface() {
-		setSize(iMainInterWidth, iMainInterHeight);
+		setSize(MAIN_INTER_WIDTH, MAIN_INTER_HEIGHT);
 		setTitle("JavaÓïÑÔ³ÌÐòÉè¼Æ_×÷Òµ3");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(null);
 
 		/* panelButton */
 		panelButton = new JPanel();
-		panelButton.setBounds(7, 6, iPanelButtonWidth, iPanelButtonHeight);
+		panelButton.setBounds(7, 6, PANEL_BUTTON_WIDTH, PANEL_BUTTON_HEIGHT);
 		panelButton.setLayout(null);
 
-		butBarGraph = new JButton("Öù×´Í¼");
-		butBarGraph.setBounds(0, 0, iButtonWidth, iButtonHeight);
-		butBarGraph.addActionListener(this);
+		butLineGraph = new JButton("ÕÛÏßÍ¼");
+		butLineGraph.setBounds(0, 10, BUTTON_WIDTH, BUTTON_HEIGHT);
+		butLineGraph.addActionListener(this);
 
 		butPieGraph = new JButton("±ý×´Í¼");
-		butPieGraph.setBounds(100, 0, iButtonWidth, iButtonHeight);
+		butPieGraph.setBounds(100, 10, BUTTON_WIDTH, BUTTON_HEIGHT);
 		butPieGraph.addActionListener(this);
 
-		panelButton.add(butBarGraph);
+		panelButton.add(butLineGraph);
 		panelButton.add(butPieGraph);
 
 		add(panelButton);
 
 		/* panelGraph */
-		panelGraph = new LineGraph();
-		panelGraph.setBounds(7, 56, iPanelGraphWidth, iPanelGraphHeight);
+		panelGraph = new JPanel();
+		panelGraph.setBounds(7, 56, PANEL_GRAPH_WIDTH, PANEL_GRAPH_HEIGHT);
 		panelGraph.setLayout(null);
 
 		add(panelGraph);
 
 		setVisible(true);
-		System.out.println(panelGraph.getSize());
 	}
-
-	void drawBarGraph() {
-		System.out.println("drawBarGraph");
+	
+	void drawLineGraph() {
+		LineGraph lineGraph = new LineGraph();
+		lineGraph.setBounds(0, 0, PANEL_GRAPH_WIDTH, PANEL_GRAPH_HEIGHT);
+		lineGraph.setLayout(null);
+		panelGraph.removeAll();
+		panelGraph.add(lineGraph);
+		panelGraph.repaint();
 	}
 
 	void drawPieGraph() {
-		System.out.println("drawPieGraph");
+		PieGraph pieGraph = new PieGraph();
+		pieGraph.setBounds(0, 0, PANEL_GRAPH_WIDTH, PANEL_GRAPH_HEIGHT);
+		pieGraph.setLayout(null);
+		panelGraph.removeAll();
+		panelGraph.add(pieGraph);
+		panelGraph.repaint();
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		if (e.getActionCommand().equals("Öù×´Í¼"))
-			drawBarGraph();
+		if (e.getActionCommand().equals("ÕÛÏßÍ¼"))
+			drawLineGraph();
 		else if (e.getActionCommand().equals("±ý×´Í¼"))
 			drawPieGraph();
 	}

@@ -9,6 +9,7 @@ public class Node {
 	public int iNum = 0;
 	public int iMaxTempera = 0;
 	public int iMaxTemperaNum = 0;
+	public int iVerID = 0;
 
 	public void addData(String strDate, String strTime, int iTempera) {
 		alstrDate.add(strDate);
@@ -16,6 +17,7 @@ public class Node {
 		aliTempera.add(iTempera);
 		maxTempera(iTempera);
 		iNum++;
+		updateVerID();
 	}
 
 	private void maxTempera(int tempera) {
@@ -27,5 +29,12 @@ public class Node {
 		} else {
 			// 最高温度不变
 		}
+	}
+
+	private void updateVerID() {
+		if (iVerID < 1000)
+			iVerID++;
+		else
+			iVerID = 0;
 	}
 }
