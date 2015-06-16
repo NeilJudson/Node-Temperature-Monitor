@@ -23,7 +23,7 @@ public class MainInterfaceFrame extends JFrame implements ActionListener,
 	private static final long serialVersionUID = 1L;
 
 	public MainInterfaceFrame() {
-		setSize(500, 500);
+		setSize(530, 450);
 		setTitle("½ÚµãÎÂ¶È¼ì²âÆ÷");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(null);
