@@ -7,13 +7,15 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class MainInterface extends JFrame implements ActionListener {
+public class NodeInfoFrame extends JFrame implements ActionListener {
+	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private static final int MAIN_INTER_WIDTH = 530;
-	private static final int MAIN_INTER_HEIGHT = 450;
+	
+	private static final int NODE_INFO_WIDTH = 530;
+	private static final int NODE_INFO_HEIGHT = 450;
 
 	private static final int PANEL_BUTTON_WIDTH = 500;
 	private static final int PANEL_BUTTON_HEIGHT = 50;
@@ -24,28 +26,25 @@ public class MainInterface extends JFrame implements ActionListener {
 	static final int PANEL_GRAPH_WIDTH = 500;
 	static final int PANEL_GRAPH_HEIGHT = 350;
 
-	private JPanel panelButton;
-	private JButton butLineGraph;
-	private JButton butPieGraph;
+	private JPanel panelGraph = new JPanel();
 
-	private JPanel panelGraph;
-
-	public MainInterface() {
-		setSize(MAIN_INTER_WIDTH, MAIN_INTER_HEIGHT);
+	public NodeInfoFrame() {
+		setSize(NODE_INFO_WIDTH, NODE_INFO_HEIGHT);
 		setTitle("JavaÓïÑÔ³ÌÐòÉè¼Æ_×÷Òµ3");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(null);
 
 		/* panelButton */
-		panelButton = new JPanel();
+		JPanel panelButton = new JPanel();
+		JButton butLineGraph = new JButton("ÕÛÏßÍ¼");
+		JButton butPieGraph = new JButton("±ý×´Í¼");
+
 		panelButton.setBounds(7, 6, PANEL_BUTTON_WIDTH, PANEL_BUTTON_HEIGHT);
 		panelButton.setLayout(null);
-
-		butLineGraph = new JButton("ÕÛÏßÍ¼");
+		
 		butLineGraph.setBounds(0, 10, BUTTON_WIDTH, BUTTON_HEIGHT);
 		butLineGraph.addActionListener(this);
-
-		butPieGraph = new JButton("±ý×´Í¼");
+		
 		butPieGraph.setBounds(100, 10, BUTTON_WIDTH, BUTTON_HEIGHT);
 		butPieGraph.addActionListener(this);
 
@@ -55,7 +54,6 @@ public class MainInterface extends JFrame implements ActionListener {
 		add(panelButton);
 
 		/* panelGraph */
-		panelGraph = new JPanel();
 		panelGraph.setBounds(7, 56, PANEL_GRAPH_WIDTH, PANEL_GRAPH_HEIGHT);
 		panelGraph.setLayout(null);
 
@@ -65,20 +63,20 @@ public class MainInterface extends JFrame implements ActionListener {
 	}
 	
 	void drawLineGraph() {
-		LineGraph lineGraph = new LineGraph();
-		lineGraph.setBounds(0, 0, PANEL_GRAPH_WIDTH, PANEL_GRAPH_HEIGHT);
-		lineGraph.setLayout(null);
+		LineGraphPanel panelLineGraph = new LineGraphPanel();
+		panelLineGraph.setBounds(0, 0, PANEL_GRAPH_WIDTH, PANEL_GRAPH_HEIGHT);
+		panelLineGraph.setLayout(null);
 		panelGraph.removeAll();
-		panelGraph.add(lineGraph);
+		panelGraph.add(panelLineGraph);
 		panelGraph.repaint();
 	}
 
 	void drawPieGraph() {
-		PieGraph pieGraph = new PieGraph();
-		pieGraph.setBounds(0, 0, PANEL_GRAPH_WIDTH, PANEL_GRAPH_HEIGHT);
-		pieGraph.setLayout(null);
+		PieGraphPanel panelPieGraph = new PieGraphPanel();
+		panelPieGraph.setBounds(0, 0, PANEL_GRAPH_WIDTH, PANEL_GRAPH_HEIGHT);
+		panelPieGraph.setLayout(null);
 		panelGraph.removeAll();
-		panelGraph.add(pieGraph);
+		panelGraph.add(panelPieGraph);
 		panelGraph.repaint();
 	}
 

@@ -1,6 +1,7 @@
 package net.alisonaa.lang;
 
 public class Math {
+	
 	/**
 	 * sinAngle
 	 * 

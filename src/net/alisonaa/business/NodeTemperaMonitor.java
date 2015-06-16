@@ -1,7 +1,7 @@
 package net.alisonaa.business;
 
 import net.alisonaa.dao.DataFileAccess;
-import net.alisonaa.gui.MainInterface;
+import net.alisonaa.gui.MainInterfaceFrame;
 import net.alisonaa.nodemodel.Node;
 
 public class NodeTemperaMonitor {
@@ -22,7 +22,6 @@ public class NodeTemperaMonitor {
 		Runnable r = new R();
 		Thread t = new Thread(r);
 		t.start();
-		new MainInterface();
+		new MainInterfaceFrame();
 	}
-
 }

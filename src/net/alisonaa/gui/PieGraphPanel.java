@@ -1,7 +1,7 @@
 package net.alisonaa.gui;
 
-import static net.alisonaa.gui.MainInterface.PANEL_GRAPH_HEIGHT;
-import static net.alisonaa.gui.MainInterface.PANEL_GRAPH_WIDTH;
+import static net.alisonaa.gui.NodeInfoFrame.PANEL_GRAPH_HEIGHT;
+import static net.alisonaa.gui.NodeInfoFrame.PANEL_GRAPH_WIDTH;
 import static net.alisonaa.lang.Math.cosAngle;
 import static net.alisonaa.lang.Math.sinAngle;
 
@@ -13,19 +13,22 @@ import javax.swing.JPanel;
 
 import net.alisonaa.business.NodeTemperaMonitor;
 
-
-
-public class PieGraph extends JPanel {
+public class PieGraphPanel extends JPanel {
+	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
 	private static final int RADIUS = 120;
 	private static final int DIAMETER = RADIUS * 2;
+	
 	private static final int CENTRAL_POINT_X = PANEL_GRAPH_WIDTH / 2 - 80;
 	private static final int CENTRAL_POINT_Y = PANEL_GRAPH_HEIGHT / 2 + 30;
+	
 	private static final int ORIGIN_POINT_X = CENTRAL_POINT_X - RADIUS;
 	private static final int ORIGIN_POINT_Y = CENTRAL_POINT_Y - RADIUS;
+	
 	private static final int LEGEND_X = PANEL_GRAPH_WIDTH - 120;
 	private static final int LEGEND_Y = 100;
 	private static final int LEGEND_WIDTH = 36;

@@ -2,7 +2,7 @@ package net.alisonaa.gui;
 
 import static net.alisonaa.awt.Graphics.drawPoint;
 import static net.alisonaa.awt.Graphics.drawSquarePoint;
-import static net.alisonaa.gui.MainInterface.PANEL_GRAPH_HEIGHT;
+import static net.alisonaa.gui.NodeInfoFrame.PANEL_GRAPH_HEIGHT;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -12,13 +12,13 @@ import javax.swing.JPanel;
 
 import net.alisonaa.business.NodeTemperaMonitor;
 
-
-
-public class LineGraph extends JPanel {
+public class LineGraphPanel extends JPanel {
+	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
 	private static final int ORIGIN_POINT_X = 25;
 	private static final int ORIGIN_POINT_Y = PANEL_GRAPH_HEIGHT - 1 - 25;
 	private static final int X_AXIS_LENGTH = 435;
