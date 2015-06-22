@@ -14,7 +14,6 @@ import javax.swing.JPanel;
 import net.alisonaa.business.NodeTemperaMonitor;
 
 public class PieGraphPanel extends JPanel {
-	
 	/**
 	 * 
 	 */
@@ -22,17 +21,20 @@ public class PieGraphPanel extends JPanel {
 	
 	private static final int RADIUS = 120;
 	private static final int DIAMETER = RADIUS * 2;
-	
 	private static final int CENTRAL_POINT_X = PANEL_GRAPH_WIDTH / 2 - 80;
 	private static final int CENTRAL_POINT_Y = PANEL_GRAPH_HEIGHT / 2 + 30;
-	
 	private static final int ORIGIN_POINT_X = CENTRAL_POINT_X - RADIUS;
 	private static final int ORIGIN_POINT_Y = CENTRAL_POINT_Y - RADIUS;
-	
 	private static final int LEGEND_X = PANEL_GRAPH_WIDTH - 120;
 	private static final int LEGEND_Y = 100;
 	private static final int LEGEND_WIDTH = 36;
 	private static final int LEGEND_HEIGHT = 14;
+	
+	public int iNodeID = 0;
+	
+	public PieGraphPanel(int iNodeID) {
+		this.iNodeID = iNodeID;
+	}
 	
 	@Override
 	public void paint(Graphics g) {
@@ -82,9 +84,9 @@ public class PieGraphPanel extends JPanel {
 
 	private double[] count() {
 		double[] arr = { 0, 0, 0, 0, 0 };
-		int k = NodeTemperaMonitor.node.iNum;
+		int k = NodeTemperaMonitor.net.node[iNodeID - 1].iNum;
 		for (int i = 0; i < k; i++) {
-			int t = NodeTemperaMonitor.node.aliTempera.get(i);
+			int t = NodeTemperaMonitor.net.node[iNodeID - 1].aliTempera.get(i);
 			if (t < 30)
 				arr[0]++;
 			else if (t >= 60)

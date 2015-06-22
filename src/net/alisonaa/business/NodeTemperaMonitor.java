@@ -2,18 +2,23 @@ package net.alisonaa.business;
 
 import net.alisonaa.dao.DataFileAccess;
 import net.alisonaa.gui.MainInterfaceFrame;
-import net.alisonaa.nodemodel.Node;
+import net.alisonaa.nodemodel.Net;
 
 public class NodeTemperaMonitor {
-	public static Node node = new Node();
+	public static final int NODE_NUM = 32;
+	
+	public static Net net = new Net();
 	public static int iDataUpdateFlag = 0;
+	
 	static class R implements Runnable {
 		public synchronized void run() {
 			DataFileAccess dfa = new DataFileAccess();
-			dfa.run();
-			if(node.iVerID != dfa.getNode().iVerID) {
-				node = dfa.getNode();
-				iDataUpdateFlag = 1;
+			for (int iNodeID = 1; iNodeID <= NODE_NUM; iNodeID++) {
+				dfa.run(iNodeID);
+				if (net.node[iNodeID - 1].iVerID != dfa.getNode().iVerID) {
+					net.node[iNodeID - 1] = dfa.getNode();
+					iDataUpdateFlag = 1;
+				}
 			}
 		}
 	}

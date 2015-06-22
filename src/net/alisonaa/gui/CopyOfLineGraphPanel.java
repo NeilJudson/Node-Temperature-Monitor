@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 
 import net.alisonaa.business.NodeTemperaMonitor;
 
-public class LineGraphPanel extends JPanel {
+public class CopyOfLineGraphPanel extends JPanel {
 	/**
 	 * 
 	 */
@@ -36,7 +36,7 @@ public class LineGraphPanel extends JPanel {
 								{ 0, 1, 1, 0, 0, 0, 0, 0, 0 },
 								{ 1, 0, 0, 0, 0, 0, 0, 0, 0 } };
 	
-	public LineGraphPanel(int iNodeID) {
+	public CopyOfLineGraphPanel(int iNodeID) {
 		this.iNodeID = iNodeID;
 	}
 

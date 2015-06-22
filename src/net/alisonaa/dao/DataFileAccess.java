@@ -12,10 +12,10 @@ public class DataFileAccess {
 		return node;
 	}
 
-	public void run() {
+	public void run(int iNodeID) {
 		String strTemp = new String();
 		try {
-			RandomAccessFile raf = new RandomAccessFile("res/1.dat", "r");
+			RandomAccessFile raf = new RandomAccessFile("data/" + iNodeID + ".dat", "r");
 			while ((strTemp = raf.readLine()) != null) {
 				node.addData(strTemp.substring(0, 10),
 						strTemp.substring(11, 19),

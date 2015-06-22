@@ -8,7 +8,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class NodeInfoFrame extends JFrame implements ActionListener {
-	
 	/**
 	 * 
 	 */
@@ -16,21 +15,20 @@ public class NodeInfoFrame extends JFrame implements ActionListener {
 	
 	private static final int NODE_INFO_WIDTH = 530;
 	private static final int NODE_INFO_HEIGHT = 450;
-
 	private static final int PANEL_BUTTON_WIDTH = 500;
 	private static final int PANEL_BUTTON_HEIGHT = 50;
-
 	private static final int BUTTON_WIDTH = 90;
 	private static final int BUTTON_HEIGHT = 30;
-
 	static final int PANEL_GRAPH_WIDTH = 500;
 	static final int PANEL_GRAPH_HEIGHT = 350;
 
+	private int iNodeID = 0; 
 	private JPanel panelGraph = new JPanel();
-
-	public NodeInfoFrame() {
+	
+	public NodeInfoFrame(int iNodeID) {
+		this.iNodeID = iNodeID;
 		setSize(NODE_INFO_WIDTH, NODE_INFO_HEIGHT);
-		setTitle("Java语言程序设计_作业3");
+		setTitle("节点" + MainInterfaceFrame.getNetID() + "-" + iNodeID + "温度详情");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(null);
 
@@ -63,7 +61,7 @@ public class NodeInfoFrame extends JFrame implements ActionListener {
 	}
 	
 	void drawLineGraph() {
-		LineGraphPanel panelLineGraph = new LineGraphPanel();
+		LineGraphPanel panelLineGraph = new LineGraphPanel(iNodeID);
 		panelLineGraph.setBounds(0, 0, PANEL_GRAPH_WIDTH, PANEL_GRAPH_HEIGHT);
 		panelLineGraph.setLayout(null);
 		panelGraph.removeAll();
@@ -72,7 +70,7 @@ public class NodeInfoFrame extends JFrame implements ActionListener {
 	}
 
 	void drawPieGraph() {
-		PieGraphPanel panelPieGraph = new PieGraphPanel();
+		PieGraphPanel panelPieGraph = new PieGraphPanel(iNodeID);
 		panelPieGraph.setBounds(0, 0, PANEL_GRAPH_WIDTH, PANEL_GRAPH_HEIGHT);
 		panelPieGraph.setLayout(null);
 		panelGraph.removeAll();
