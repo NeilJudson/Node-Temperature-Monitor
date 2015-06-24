@@ -27,10 +27,11 @@ public class NodeInfoFrame extends JFrame implements ActionListener {
 	
 	public NodeInfoFrame(int iNodeID) {
 		this.iNodeID = iNodeID;
+
 		setSize(NODE_INFO_WIDTH, NODE_INFO_HEIGHT);
 		setTitle("节点" + MainInterfaceFrame.getNetID() + "-" + iNodeID + "温度详情");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(null);
+		setLocation(530, 0);
 
 		/* panelButton */
 		JPanel panelButton = new JPanel();
@@ -39,17 +40,20 @@ public class NodeInfoFrame extends JFrame implements ActionListener {
 
 		panelButton.setBounds(7, 6, PANEL_BUTTON_WIDTH, PANEL_BUTTON_HEIGHT);
 		panelButton.setLayout(null);
-		
+
 		butLineGraph.setBounds(0, 10, BUTTON_WIDTH, BUTTON_HEIGHT);
 		butLineGraph.addActionListener(this);
-		
+
 		butPieGraph.setBounds(100, 10, BUTTON_WIDTH, BUTTON_HEIGHT);
 		butPieGraph.addActionListener(this);
 
 		panelButton.add(butLineGraph);
 		panelButton.add(butPieGraph);
+		butLineGraph = null;
+		butPieGraph = null;
 
 		add(panelButton);
+		panelButton = null;
 
 		/* panelGraph */
 		panelGraph.setBounds(7, 56, PANEL_GRAPH_WIDTH, PANEL_GRAPH_HEIGHT);
@@ -67,6 +71,7 @@ public class NodeInfoFrame extends JFrame implements ActionListener {
 		panelGraph.removeAll();
 		panelGraph.add(panelLineGraph);
 		panelGraph.repaint();
+		panelLineGraph = null;
 	}
 
 	void drawPieGraph() {
@@ -76,6 +81,7 @@ public class NodeInfoFrame extends JFrame implements ActionListener {
 		panelGraph.removeAll();
 		panelGraph.add(panelPieGraph);
 		panelGraph.repaint();
+		panelPieGraph = null;
 	}
 
 	@Override

@@ -25,5 +25,6 @@ public class DataFileAccess {
 		} catch (IOException e) {
 			System.out.print("Read File Error" + e);
 		}
+		strTemp = null;
 	}
 }

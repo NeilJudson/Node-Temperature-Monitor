@@ -12,6 +12,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -22,6 +24,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 import net.alisonaa.business.NodeTemperaMonitor;
+import net.alisonaa.dao.Runa;
 
 public class MainInterfaceFrame extends JFrame implements ActionListener,
 		ItemListener, MouseListener {
@@ -29,14 +32,22 @@ public class MainInterfaceFrame extends JFrame implements ActionListener,
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	private JPanel panelPeriod = new JPanel();
-	private JPanel panelThreshold = new JPanel();
-	private JPanel panelSysSta = new JPanel();
-	private JPanel panelTempera = new JPanel();
-	
-	private String strThreshold = new String();
+
 	private static String strNetID = "1";
+
+	private JButton butRefresh = new JButton("刷新");
+
+	private JPanel panelPeriod = new JPanel();
+	String strPeriod = new String();
+	String strPeriodUnit = new String();
+	String strPeriodUnitNum = new String();
+
+	private JPanel panelThreshold = new JPanel();
+	private String strThreshold = new String();
+
+	private JPanel panelSysSta = new JPanel();
+
+	private JPanel panelTempera = new JPanel();
 	private JLabel[] label = new JLabel[NODE_NUM];
 	
 	public MainInterfaceFrame() {
@@ -83,8 +94,7 @@ public class MainInterfaceFrame extends JFrame implements ActionListener,
 		choNet.setBounds(100, 15, 50, 50);
 		choNet.add("1");
 		choNet.addItemListener(this);
-		
-		JButton butRefresh = new JButton("刷新");
+
 		butRefresh.setBounds(410, 10, 60, 30);
 		butRefresh.addActionListener(this);
 
@@ -92,38 +102,41 @@ public class MainInterfaceFrame extends JFrame implements ActionListener,
 		panel1.add(choNet);
 		panel1.add(butRefresh);
 
+		add(panel1);
+		panel1 = null;
+
 		/* panelPeriod */
 		panelPeriod.setLayout(null);
 		panelPeriod.setBounds(7, 56, 250, 50);
 		updatePeriodPanel();
 
+		add(panelPeriod);
+
 		/* panelThreshold */
 		panelThreshold.setLayout(null);
 		panelThreshold.setBounds(257, 56, 250, 50);
 		updateThresholdPanel();
-		
+
+		add(panelThreshold);
+
 		/* panelSysSta */
 		panelSysSta.setLayout(null);
-		panelSysSta.setBounds(7, 106, 250, 50);
+		panelSysSta.setBounds(7, 106, 500, 50);
 		updateSysStaPanel();
-		
+
+		add(panelSysSta);
+
 		/* panelTempera */
 		panelTempera.setLayout(null);
 		panelTempera.setBounds(7, 156, 500, 200);
 		updateTemperaPanel();
-		
-		add(panel1);
-		add(panelPeriod);
-		add(panelThreshold);
-		add(panelSysSta);
+
 		add(panelTempera);
-		
+
 		setVisible(true);
 	}
 	
 	private void updatePeriodPanel() {
-		String strPeriod = new String();
-		String strPeriodUnit = new String();
 		try {
 			RandomAccessFile raf = new RandomAccessFile("config.dat", "r");
 			strPeriod = raf.readLine();
@@ -168,9 +181,8 @@ public class MainInterfaceFrame extends JFrame implements ActionListener,
 				flag = i;
 			}
 		}
-		JLabel labMaxTem = new JLabel("最高温度   节点" + strNetID + "-" + (flag + 1) + "  "
-				+ iMaxTempera + "℃");
-		labMaxTem.setBounds(0, 0, 200, 50);
+		JLabel labMaxTem = new JLabel("最高温度   节点" + strNetID + "-" + (flag + 1) + "  " + iMaxTempera + "℃");
+		labMaxTem.setBounds(0, 0, 250, 50);
 		JLabel labStaSys;
 		if (Integer.valueOf(strThreshold) < iMaxTempera) {
 			labStaSys = new JLabel("系统状态：  不正常");
@@ -198,43 +210,93 @@ public class MainInterfaceFrame extends JFrame implements ActionListener,
 				} else {
 					strNodeID = String.valueOf(n + 1) + "     ";
 				}
-				while(NodeTemperaMonitor.net.node[n].iNum == 0) {
-					System.out.println((n + 1) + "节点未读入数据");
-				}
-				label[n] = new JLabel("节点" + strNetID + "-" + strNodeID
-						+ NodeTemperaMonitor.net.node[n].aliTempera.get(NodeTemperaMonitor.net.node[n].iNum - 1) + "℃");
-				label[n].setForeground(Color.BLUE);
+				int iTempera = NodeTemperaMonitor.net.node[n].aliTempera.get(NodeTemperaMonitor.net.node[n].iNum - 1);
+				label[n] = new JLabel("节点" + strNetID + "-" + strNodeID + iTempera + "℃");
+				if (iTempera >= Integer.valueOf(strThreshold))
+					label[n].setForeground(Color.RED);
+				else
+					label[n].setForeground(Color.BLUE);
 				label[n].setBounds(j * 125, i * 25, 125, 25);
 				panelTemp.add(label[n]);
 				label[n].addMouseListener(this);
 			}
 		}
+		strNodeID = null;
 		panelTempera.removeAll();
 		panelTempera.add(panelTemp);
 		panelTempera.repaint();
+		panelTemp = null;
 	}
 	
 	static String getNetID() {
 		return strNetID;
 	}
 	
+	@SuppressWarnings("deprecation")
+	public void refresh() {
+		butRefresh.enable(false);
+		Runa runa = new Runa();
+		runa.refreshRun();
+		runa = null;
+		updateSysStaPanel();
+		updateTemperaPanel();
+		butRefresh.enable(true);
+
+	}
+	
+	public TimerTask task = new TimerTask() {
+		public void run() {
+			refresh();
+		}
+	};
+	
+	public void timedRefresh() {
+		try {
+			RandomAccessFile raf = new RandomAccessFile("config.dat", "r");
+			strPeriod = raf.readLine();
+			strPeriodUnit = raf.readLine();
+			strPeriodUnitNum = raf.readLine();
+			raf.close();
+		} catch (IOException e) {
+			System.out.print("Read File Error" + e);
+		}
+		int i = 0;
+		int j = Integer.valueOf(strPeriod);
+		switch (Integer.valueOf(strPeriodUnitNum)) {
+		case 0:
+			i = 1;
+			break;
+		case 1:
+			i = 1000;
+			break;
+		case 2:
+			i = 60000;
+			break;
+		case 3:
+			i = 3600000;
+			break;
+		}
+		Timer timer = new Timer();
+		timer.schedule(task, 0, i * j);
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if (e.getActionCommand().equals("查询")) {
-			System.out.println("查询");
+			new QueryFrame(); 
 		}
 		if (e.getActionCommand().equals("配置刷新周期")) {
-			System.out.println("配置刷新周期");
+			new ConfPeriodFrame();
 		}
 		if (e.getActionCommand().equals("配置报警温度阀值")) {
-			System.out.println("配置报警温度阀值");
+			new ConfThresholdFrame();
 		}
 		if (e.getActionCommand().equals("关于节点温度监测器")) {
 			System.out.println("关于节点温度监测器");
 		}
 		if (e.getActionCommand().equals("刷新")) {
-			System.out.println("刷新");
+			this.refresh();
 		}
 	}
 
