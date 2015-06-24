@@ -13,7 +13,6 @@ import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.Timer;
-import java.util.TimerTask;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -134,9 +133,11 @@ public class MainInterfaceFrame extends JFrame implements ActionListener,
 		add(panelTempera);
 
 		setVisible(true);
+		
+		timedRefresh();
 	}
 	
-	private void updatePeriodPanel() {
+	public void updatePeriodPanel() {
 		try {
 			RandomAccessFile raf = new RandomAccessFile("config.dat", "r");
 			strPeriod = raf.readLine();
@@ -153,7 +154,7 @@ public class MainInterfaceFrame extends JFrame implements ActionListener,
 		panelPeriod.repaint();
 	}
 	
-	private void updateThresholdPanel() {
+	public void updateThresholdPanel() {
 		try {
 			RandomAccessFile raf = new RandomAccessFile("config.dat", "r");
 			raf.readLine();
@@ -244,13 +245,15 @@ public class MainInterfaceFrame extends JFrame implements ActionListener,
 
 	}
 	
-	public TimerTask task = new TimerTask() {
+	public MainInterfaceFrame_TimerTask task = new MainInterfaceFrame_TimerTask() {
 		public void run() {
 			refresh();
 		}
 	};
+
 	
-	public void timedRefresh() {
+	public Timer timer = new Timer();
+	public int timedRefresh() {
 		try {
 			RandomAccessFile raf = new RandomAccessFile("config.dat", "r");
 			strPeriod = raf.readLine();
@@ -276,8 +279,7 @@ public class MainInterfaceFrame extends JFrame implements ActionListener,
 			i = 3600000;
 			break;
 		}
-		Timer timer = new Timer();
-		timer.schedule(task, 0, i * j);
+		return i * j;
 	}
 	
 	@Override
@@ -293,7 +295,7 @@ public class MainInterfaceFrame extends JFrame implements ActionListener,
 			new ConfThresholdFrame();
 		}
 		if (e.getActionCommand().equals("关于节点温度监测器")) {
-			System.out.println("关于节点温度监测器");
+			new AboutFrame();
 		}
 		if (e.getActionCommand().equals("刷新")) {
 			this.refresh();

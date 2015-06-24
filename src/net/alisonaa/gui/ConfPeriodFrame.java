@@ -3,7 +3,6 @@ package net.alisonaa.gui;
 import java.awt.Choice;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -27,7 +26,6 @@ public class ConfPeriodFrame extends JFrame implements ActionListener {
 	
 	public ConfPeriodFrame() {
 		setSize(250, 150);
-		setVisible(true);
 		setTitle("≈‰÷√À¢–¬÷‹∆⁄");
 		setLayout(null);
 		setLocation(0, 450);
@@ -60,7 +58,7 @@ public class ConfPeriodFrame extends JFrame implements ActionListener {
 		
 		add(panel);
 		
-		
+		setVisible(true);
 	}
 
 	void config()
@@ -75,8 +73,10 @@ public class ConfPeriodFrame extends JFrame implements ActionListener {
 					+ choPeriodUnit.getSelectedItem() + "\r"
 					+ choPeriodUnit.getSelectedIndex() + "\r"
 					+ raf.readLine() + "\r");
-			raf.writeBytes(str);
 			raf.close();
+			FileWriter fw = new FileWriter("config.dat");
+			fw.write(str);
+			fw.close();
 		}
 		catch(IOException e)
 		{
