@@ -36,7 +36,6 @@ public class QueryFrame extends JFrame implements ActionListener {
 
 	public QueryFrame() {
 		setSize(350, 150);
-		setVisible(true);
 		setTitle("≤È—Ø");
 		setLayout(null);
 		setLocation(530, 450);
@@ -87,6 +86,8 @@ public class QueryFrame extends JFrame implements ActionListener {
 		panel3.setBounds(7, 56, 320, 41);
 		
 		add(panel3);
+		
+		setVisible(true);
 	}
 	
 	private void panel2() {

@@ -19,46 +19,42 @@ public class ConfThresholdFrame extends JFrame implements ActionListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	Choice choThreshold=new Choice();
-	
+
+	private Choice choThreshold = new Choice();
+
 	public ConfThresholdFrame() {
-		setSize(250,150);
+		setSize(250, 150);
 		setTitle("配置报警温度阀值");
 		setLayout(null);
 		setLocation(250, 450);
-		
+
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
 		panel.setBounds(7, 6, 220, 100);
-		
-		JLabel label1 = new JLabel("报警温度阀值");
-		label1.setBounds(10, 0, 90, 50);
-		
+
+		JLabel label = new JLabel("报警温度阀值");
+		label.setBounds(10, 0, 90, 50);
+
 		choThreshold.setBounds(100, 15, 40, 50);
-		for(int i=60;i<121;i++)
-		{
+		for (int i = 60; i < 121; i++) {
 			choThreshold.add(String.valueOf(i));
 		}
 		
-		panel.add(label1);
-		panel.add(choThreshold);
-		
-		JButton jb=new JButton("确定");
+		JButton jb = new JButton("确定");
 		jb.setBounds(75, 60, 60, 30);
 		jb.addActionListener(this);
-		
+
+		panel.add(label);
+		panel.add(choThreshold);
 		panel.add(jb);
-		
+
 		add(panel);
-		
+
 		setVisible(true);
 	}
 
-	void config()
-	{
-		try
-		{
+	private void config() {
+		try {
 			RandomAccessFile raf = new RandomAccessFile("config.dat", "rw");
 			String str = new String(raf.readLine() + "\r" + raf.readLine()
 					+ "\r" + raf.readLine() + "\r"
@@ -67,13 +63,11 @@ public class ConfThresholdFrame extends JFrame implements ActionListener {
 			FileWriter fw = new FileWriter("config.dat");
 			fw.write(str);
 			fw.close();
-		}
-		catch(IOException e)
-		{
-			System.out.print("Read File Error"+e);
+		} catch (IOException e) {
+			System.out.print("Read File Error" + e);
 		}
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub

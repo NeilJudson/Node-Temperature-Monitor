@@ -17,9 +17,10 @@ public class DataFileAccess {
 		try {
 			RandomAccessFile raf = new RandomAccessFile("data/" + iNodeID + ".dat", "r");
 			while ((strTemp = raf.readLine()) != null) {
-				node.addData(strTemp.substring(0, 10),
-						strTemp.substring(11, 19),
-						Integer.valueOf(strTemp.substring(20)));
+				node.addData(strTemp.split(" "));
+//				node.addData(strTemp.substring(0, 10),
+//						strTemp.substring(11, 19),
+//						Integer.valueOf(strTemp.substring(20)));
 			}
 			raf.close();
 		} catch (IOException e) {

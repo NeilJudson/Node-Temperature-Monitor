@@ -37,9 +37,9 @@ public class MainInterfaceFrame extends JFrame implements ActionListener,
 	private JButton butRefresh = new JButton("刷新");
 
 	private JPanel panelPeriod = new JPanel();
-	String strPeriod = new String();
-	String strPeriodUnit = new String();
-	String strPeriodUnitNum = new String();
+	private String strPeriod = new String();
+	private String strPeriodUnit = new String();
+	private String strPeriodUnitNum = new String();
 
 	private JPanel panelThreshold = new JPanel();
 	private String strThreshold = new String();
@@ -57,9 +57,11 @@ public class MainInterfaceFrame extends JFrame implements ActionListener,
 
 		/* menuBar */
 		JMenuBar menuBar = new JMenuBar();
+		
 		JMenu menuConf = new JMenu("配置");
 		JMenu menuHelp = new JMenu("帮助");
 		JMenu menuQuery = new JMenu("查询");
+		
 		JMenuItem query_Query = new JMenuItem("查询");
 		JMenuItem conf_Period = new JMenuItem("配置刷新周期");
 		JMenuItem conf_Threshold = new JMenuItem("配置报警温度阀值");
@@ -146,8 +148,7 @@ public class MainInterfaceFrame extends JFrame implements ActionListener,
 		} catch (IOException e) {
 			System.out.print("Read File Error" + e);
 		}
-		JLabel labPeriod = new JLabel("温度报告周期" + "   " + strPeriod + " "
-				+ strPeriodUnit);
+		JLabel labPeriod = new JLabel("温度报告周期" + "   " + strPeriod + " " + strPeriodUnit);
 		labPeriod.setBounds(0, 0, 200, 50);
 		panelPeriod.removeAll();
 		panelPeriod.add(labPeriod);
@@ -165,8 +166,7 @@ public class MainInterfaceFrame extends JFrame implements ActionListener,
 		} catch (IOException e) {
 			System.out.print("Read File Error" + e);
 		}
-		JLabel labThreshold = new JLabel("报警温度阀值" + "   " + strThreshold + " "
-				+ "℃");
+		JLabel labThreshold = new JLabel("报警温度阀值" + "   " + strThreshold + " " + "℃");
 		labThreshold.setBounds(0, 0, 200, 50);
 		panelThreshold.removeAll();
 		panelThreshold.add(labThreshold);

@@ -19,6 +19,15 @@ public class Node {
 		iNum++;
 		updateVerID();
 	}
+	
+	public void addData(String[] strArrData) {
+		alstrDate.add(strArrData[0]);
+		alstrTime.add(strArrData[1]);
+		aliTempera.add(Integer.valueOf(strArrData[2]));
+		maxTempera(Integer.valueOf(strArrData[2]));
+		iNum++;
+		updateVerID();
+	}
 
 	private void maxTempera(int tempera) {
 		if (tempera > iMaxTempera) {

@@ -21,8 +21,8 @@ public class ConfPeriodFrame extends JFrame implements ActionListener {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	JTextField textPeriod = new JTextField(5);
-	Choice choPeriodUnit = new Choice();
+	private JTextField textPeriod = new JTextField(5);
+	private Choice choPeriodUnit = new Choice();
 	
 	public ConfPeriodFrame() {
 		setSize(250, 150);
@@ -34,8 +34,8 @@ public class ConfPeriodFrame extends JFrame implements ActionListener {
 		panel.setLayout(null);
 		panel.setBounds(7, 6, 220, 100);
 
-		JLabel label4 = new JLabel("温度报告周期");
-		label4.setBounds(0, 0, 90, 50);
+		JLabel label = new JLabel("温度报告周期");
+		label.setBounds(0, 0, 90, 50);
 		
 		textPeriod.setBounds(90, 13, 50, 24);
 		textPeriod.setText("1000");
@@ -46,14 +46,13 @@ public class ConfPeriodFrame extends JFrame implements ActionListener {
 		choPeriodUnit.add("min");
 		choPeriodUnit.add("h");
 
-		panel.add(label4);
-		panel.add(textPeriod);
-		panel.add(choPeriodUnit);
-		
 		JButton jb=new JButton("确定");
 		jb.setBounds(75, 60, 60, 30);
 		jb.addActionListener(this);
-		
+
+		panel.add(label);
+		panel.add(textPeriod);
+		panel.add(choPeriodUnit);
 		panel.add(jb);
 		
 		add(panel);
@@ -61,7 +60,7 @@ public class ConfPeriodFrame extends JFrame implements ActionListener {
 		setVisible(true);
 	}
 
-	void config()
+	private void config()
 	{
 		try
 		{

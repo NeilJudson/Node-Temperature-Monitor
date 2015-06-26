@@ -26,15 +26,17 @@ public class LineGraphPanel extends JPanel {
 	private static final int Y_AXIS_END_Y = ORIGIN_POINT_Y - Y_AXIS_LENGTH + 1;
 	
 	private int iNodeID = 0;
-	private int[][] arrow = { 	{ 1, 0, 0, 0, 0, 0, 0, 0, 0 },
-								{ 0, 1, 1, 0, 0, 0, 0, 0, 0 },
-								{ 0, 0, 1, 1, 1, 0, 0, 0, 0 },
-								{ 0, 0, 0, 1, 1, 1, 1, 0, 0 },
-								{ 1, 1, 1, 1, 1, 1, 1, 1, 1 },
-								{ 0, 0, 0, 1, 1, 1, 1, 0, 0 },
-								{ 0, 0, 1, 1, 1, 0, 0, 0, 0 },
-								{ 0, 1, 1, 0, 0, 0, 0, 0, 0 },
-								{ 1, 0, 0, 0, 0, 0, 0, 0, 0 } };
+	
+	private String[] arrow = {
+			"*........",
+			".**......",
+			"..***....",
+			"...****..",
+			"*********",
+			"...****..",
+			"..***....",
+			".**......",
+			"*........" };
 	
 	public LineGraphPanel(int iNodeID) {
 		this.iNodeID = iNodeID;
@@ -52,11 +54,16 @@ public class LineGraphPanel extends JPanel {
 		/* draw x axis */
 		// draw arrow
 		g.drawLine(ORIGIN_POINT_X, ORIGIN_POINT_Y, X_AXIS_END_X, ORIGIN_POINT_Y);
-		for (int i = 0; i < 9; i++) {
-			for (int j = 0; j < 9; j++) {
-				if (arrow[i][j] == 1)
-					drawPoint(g, X_AXIS_END_X + 1 + j, ORIGIN_POINT_Y - 4 + i);
+		int row = 0;
+		int col = 0;
+		for (String str : arrow) {
+			col = 0;
+			for (char c : str.toCharArray()) {
+				if (c == '*')
+					drawPoint(g, X_AXIS_END_X + 1 + col, ORIGIN_POINT_Y - 4 + row);
+				col++;
 			}
+			row++;
 		}
 		// draw scale
 		for (int i = 0; i < 24; i++) {
@@ -74,11 +81,15 @@ public class LineGraphPanel extends JPanel {
 		/* draw y axis */
 		// draw arrow
 		g.drawLine(ORIGIN_POINT_X, ORIGIN_POINT_Y, ORIGIN_POINT_X, Y_AXIS_END_Y);
-		for (int i = 0; i < 9; i++) {
-			for (int j = 0; j < 9; j++) {
-				if (arrow[i][j] == 1)
-					drawPoint(g, ORIGIN_POINT_X - 4 + i, Y_AXIS_END_Y - 1 - j);
+		row = 0;
+		for (String str : arrow) {
+			col = 0;
+			for (char c : str.toCharArray()) {
+				if (c == '*')
+					drawPoint(g, ORIGIN_POINT_X - 4 + row, Y_AXIS_END_Y - 1 - col);
+				col++;
 			}
+			row++;
 		}
 		// draw scale
 		for (int i = 0; i < 10; i++) {

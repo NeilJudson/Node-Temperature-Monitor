@@ -30,7 +30,7 @@ public class PieGraphPanel extends JPanel {
 	private static final int LEGEND_WIDTH = 36;
 	private static final int LEGEND_HEIGHT = 14;
 	
-	public int iNodeID = 0;
+	private int iNodeID = 0;
 	
 	public PieGraphPanel(int iNodeID) {
 		this.iNodeID = iNodeID;

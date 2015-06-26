@@ -35,15 +35,14 @@ public class NodeInfoFrame extends JFrame implements ActionListener {
 
 		/* panelButton */
 		JPanel panelButton = new JPanel();
-		JButton butLineGraph = new JButton("ÕÛÏßÍ¼");
-		JButton butPieGraph = new JButton("±ý×´Í¼");
-
 		panelButton.setBounds(7, 6, PANEL_BUTTON_WIDTH, PANEL_BUTTON_HEIGHT);
 		panelButton.setLayout(null);
 
+		JButton butLineGraph = new JButton("ÕÛÏßÍ¼");
 		butLineGraph.setBounds(0, 10, BUTTON_WIDTH, BUTTON_HEIGHT);
 		butLineGraph.addActionListener(this);
 
+		JButton butPieGraph = new JButton("±ý×´Í¼");
 		butPieGraph.setBounds(100, 10, BUTTON_WIDTH, BUTTON_HEIGHT);
 		butPieGraph.addActionListener(this);
 
@@ -64,7 +63,7 @@ public class NodeInfoFrame extends JFrame implements ActionListener {
 		setVisible(true);
 	}
 	
-	void drawLineGraph() {
+	private void drawLineGraph() {
 		LineGraphPanel panelLineGraph = new LineGraphPanel(iNodeID);
 		panelLineGraph.setBounds(0, 0, PANEL_GRAPH_WIDTH, PANEL_GRAPH_HEIGHT);
 		panelLineGraph.setLayout(null);
@@ -74,7 +73,7 @@ public class NodeInfoFrame extends JFrame implements ActionListener {
 		panelLineGraph = null;
 	}
 
-	void drawPieGraph() {
+	private void drawPieGraph() {
 		PieGraphPanel panelPieGraph = new PieGraphPanel(iNodeID);
 		panelPieGraph.setBounds(0, 0, PANEL_GRAPH_WIDTH, PANEL_GRAPH_HEIGHT);
 		panelPieGraph.setLayout(null);
