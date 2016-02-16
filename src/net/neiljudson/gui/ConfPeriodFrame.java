@@ -21,8 +21,8 @@ public class ConfPeriodFrame extends JFrame implements ActionListener {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private JTextField textPeriod = new JTextField(5);
-	private Choice choPeriodUnit = new Choice();
+	private JTextField textPeriod = null;
+	private Choice choPeriodUnit = null;
 	
 	public ConfPeriodFrame() {
 		setSize(250, 150);
@@ -37,9 +37,11 @@ public class ConfPeriodFrame extends JFrame implements ActionListener {
 		JLabel label = new JLabel("温度报告周期");
 		label.setBounds(0, 0, 90, 50);
 		
+		textPeriod = new JTextField(5);
 		textPeriod.setBounds(90, 13, 50, 24);
 		textPeriod.setText("1000");
 
+		choPeriodUnit = new Choice();
 		choPeriodUnit.setBounds(150, 15, 50, 50);
 		choPeriodUnit.add("ms");
 		choPeriodUnit.add("s");
@@ -89,7 +91,7 @@ public class ConfPeriodFrame extends JFrame implements ActionListener {
 		if (e.getActionCommand().equals("确定")) {
 			config();
 			dispose();
-			NodeTemperaMonitor.iPeriodChanged = 1;
+			NodeTemperaMonitor.iPeriodChanged = true;
 		}
 	}
 }

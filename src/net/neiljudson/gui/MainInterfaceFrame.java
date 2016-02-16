@@ -25,8 +25,7 @@ import javax.swing.JPanel;
 import net.neiljudson.business.NodeTemperaMonitor;
 import net.neiljudson.dao.Runa;
 
-public class MainInterfaceFrame extends JFrame implements ActionListener,
-		ItemListener, MouseListener {
+public class MainInterfaceFrame extends JFrame implements ActionListener, ItemListener, MouseListener {
 	/**
 	 * 
 	 */
@@ -34,21 +33,21 @@ public class MainInterfaceFrame extends JFrame implements ActionListener,
 
 	private static String strNetID = "1";
 
-	private JButton butRefresh = new JButton("刷新");
+	private JButton butRefresh = null;
 
-	private JPanel panelPeriod = new JPanel();
+	private JPanel panelPeriod = null;
 	private String strPeriod = new String();
 	private String strPeriodUnit = new String();
 	private String strPeriodUnitNum = new String();
 
-	private JPanel panelThreshold = new JPanel();
+	private JPanel panelThreshold = null;
 	private String strThreshold = new String();
 
-	private JPanel panelSysSta = new JPanel();
+	private JPanel panelSysSta = null;
 
-	private JPanel panelTempera = new JPanel();
-	private JLabel[] label = new JLabel[NODE_NUM];
-	
+	private JPanel panelTempera = null;
+	private JLabel[] label = null;
+
 	public MainInterfaceFrame() {
 		setSize(530, 450);
 		setTitle("节点温度检测器");
@@ -57,11 +56,11 @@ public class MainInterfaceFrame extends JFrame implements ActionListener,
 
 		/* menuBar */
 		JMenuBar menuBar = new JMenuBar();
-		
+
 		JMenu menuConf = new JMenu("配置");
 		JMenu menuHelp = new JMenu("帮助");
 		JMenu menuQuery = new JMenu("查询");
-		
+
 		JMenuItem query_Query = new JMenuItem("查询");
 		JMenuItem conf_Period = new JMenuItem("配置刷新周期");
 		JMenuItem conf_Threshold = new JMenuItem("配置报警温度阀值");
@@ -96,6 +95,7 @@ public class MainInterfaceFrame extends JFrame implements ActionListener,
 		choNet.add("1");
 		choNet.addItemListener(this);
 
+		butRefresh = new JButton("刷新");
 		butRefresh.setBounds(410, 10, 60, 30);
 		butRefresh.addActionListener(this);
 
@@ -107,6 +107,7 @@ public class MainInterfaceFrame extends JFrame implements ActionListener,
 		panel1 = null;
 
 		/* panelPeriod */
+		panelPeriod = new JPanel();
 		panelPeriod.setLayout(null);
 		panelPeriod.setBounds(7, 56, 250, 50);
 		updatePeriodPanel();
@@ -114,6 +115,7 @@ public class MainInterfaceFrame extends JFrame implements ActionListener,
 		add(panelPeriod);
 
 		/* panelThreshold */
+		panelThreshold = new JPanel();
 		panelThreshold.setLayout(null);
 		panelThreshold.setBounds(257, 56, 250, 50);
 		updateThresholdPanel();
@@ -121,6 +123,7 @@ public class MainInterfaceFrame extends JFrame implements ActionListener,
 		add(panelThreshold);
 
 		/* panelSysSta */
+		panelSysSta = new JPanel();
 		panelSysSta.setLayout(null);
 		panelSysSta.setBounds(7, 106, 500, 50);
 		updateSysStaPanel();
@@ -128,6 +131,7 @@ public class MainInterfaceFrame extends JFrame implements ActionListener,
 		add(panelSysSta);
 
 		/* panelTempera */
+		panelTempera = new JPanel();
 		panelTempera.setLayout(null);
 		panelTempera.setBounds(7, 156, 500, 200);
 		updateTemperaPanel();
@@ -135,10 +139,10 @@ public class MainInterfaceFrame extends JFrame implements ActionListener,
 		add(panelTempera);
 
 		setVisible(true);
-		
+
 		timedRefresh();
 	}
-	
+
 	public void updatePeriodPanel() {
 		try {
 			RandomAccessFile raf = new RandomAccessFile("config.dat", "r");
@@ -154,7 +158,7 @@ public class MainInterfaceFrame extends JFrame implements ActionListener,
 		panelPeriod.add(labPeriod);
 		panelPeriod.repaint();
 	}
-	
+
 	public void updateThresholdPanel() {
 		try {
 			RandomAccessFile raf = new RandomAccessFile("config.dat", "r");
@@ -172,7 +176,7 @@ public class MainInterfaceFrame extends JFrame implements ActionListener,
 		panelThreshold.add(labThreshold);
 		panelThreshold.repaint();
 	}
-	
+
 	private void updateSysStaPanel() {
 		int iMaxTempera = 0;
 		int flag = 0;
@@ -197,8 +201,9 @@ public class MainInterfaceFrame extends JFrame implements ActionListener,
 		panelSysSta.add(labStaSys);
 		panelSysSta.repaint();
 	}
-	
+
 	private void updateTemperaPanel() {
+		label = new JLabel[NODE_NUM];
 		String strNodeID = new String();
 		JPanel panelTemp = new JPanel();
 		panelTemp.setLayout(null);
@@ -228,11 +233,11 @@ public class MainInterfaceFrame extends JFrame implements ActionListener,
 		panelTempera.repaint();
 		panelTemp = null;
 	}
-	
+
 	static String getNetID() {
 		return strNetID;
 	}
-	
+
 	@SuppressWarnings("deprecation")
 	public void refresh() {
 		butRefresh.enable(false);
@@ -244,15 +249,15 @@ public class MainInterfaceFrame extends JFrame implements ActionListener,
 		butRefresh.enable(true);
 
 	}
-	
+
 	public MainInterfaceFrame_TimerTask task = new MainInterfaceFrame_TimerTask() {
 		public void run() {
 			refresh();
 		}
 	};
 
-	
 	public Timer timer = new Timer();
+
 	public int timedRefresh() {
 		try {
 			RandomAccessFile raf = new RandomAccessFile("config.dat", "r");
@@ -281,12 +286,12 @@ public class MainInterfaceFrame extends JFrame implements ActionListener,
 		}
 		return i * j;
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if (e.getActionCommand().equals("查询")) {
-			new QueryFrame(); 
+			new QueryFrame();
 		}
 		if (e.getActionCommand().equals("配置刷新周期")) {
 			new ConfPeriodFrame();
@@ -305,7 +310,7 @@ public class MainInterfaceFrame extends JFrame implements ActionListener,
 	@Override
 	public void itemStateChanged(ItemEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -321,24 +326,24 @@ public class MainInterfaceFrame extends JFrame implements ActionListener,
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

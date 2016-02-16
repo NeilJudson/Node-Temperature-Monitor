@@ -74,7 +74,7 @@ public class ConfThresholdFrame extends JFrame implements ActionListener {
 		if (e.getActionCommand().equals("È·¶¨")) {
 			config();
 			dispose();
-			NodeTemperaMonitor.iThresholdChanged = 1;
+			NodeTemperaMonitor.iThresholdChanged = true;
 		}
 	}
 }
