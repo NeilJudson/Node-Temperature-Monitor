@@ -8,27 +8,26 @@ public class NodeTemperaMonitor {
 	public static final int NODE_NUM = 32;
 
 	public static Net net = new Net();
-	public static int iPeriodChanged = 0;
-	public static int iThresholdChanged = 0;
+	public static boolean iPeriodChanged = false;
+	public static boolean iThresholdChanged = false;
 
 	public static void main(String[] args) {
-		Runnable r = new Runa();
-		Thread t = new Thread(r);
-		t.start();
+		new Thread(new Runa()).start();
 		MainInterfaceFrame mif = new MainInterfaceFrame();
 		int p = mif.timedRefresh();
 		mif.timer.schedule(mif.task, p, p);
 		while (true) {
-			if (iPeriodChanged == 1) {
+			if (iPeriodChanged) {
 				p = mif.timedRefresh();
 				mif.task.setPeriod(p);
 				mif.updatePeriodPanel();
-				iPeriodChanged = 0;
+				iPeriodChanged = false;
 			}
-			if (iThresholdChanged == 1) {
+			if (iThresholdChanged) {
 				mif.updateThresholdPanel();
-				iThresholdChanged = 0;
+				iThresholdChanged = false;
 			}
+			System.out.print("");
 		}
 	}
 }
