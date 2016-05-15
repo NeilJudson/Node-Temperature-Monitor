@@ -20,10 +20,10 @@ public class ConfPeriodFrame extends JFrame implements ActionListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	private JTextField textPeriod = null;
 	private Choice choPeriodUnit = null;
-	
+
 	public ConfPeriodFrame() {
 		setSize(250, 150);
 		setTitle("配置刷新周期");
@@ -36,7 +36,7 @@ public class ConfPeriodFrame extends JFrame implements ActionListener {
 
 		JLabel label = new JLabel("温度报告周期");
 		label.setBounds(0, 0, 90, 50);
-		
+
 		textPeriod = new JTextField(5);
 		textPeriod.setBounds(90, 13, 50, 24);
 		textPeriod.setText("1000");
@@ -48,7 +48,7 @@ public class ConfPeriodFrame extends JFrame implements ActionListener {
 		choPeriodUnit.add("min");
 		choPeriodUnit.add("h");
 
-		JButton jb=new JButton("确定");
+		JButton jb = new JButton("确定");
 		jb.setBounds(75, 60, 60, 30);
 		jb.addActionListener(this);
 
@@ -56,35 +56,42 @@ public class ConfPeriodFrame extends JFrame implements ActionListener {
 		panel.add(textPeriod);
 		panel.add(choPeriodUnit);
 		panel.add(jb);
-		
+
 		add(panel);
-		
+
 		setVisible(true);
 	}
 
-	private void config()
-	{
-		try
-		{
-			RandomAccessFile raf = new RandomAccessFile("config.dat", "rw");
+	private void config() {
+		RandomAccessFile raf = null;
+		FileWriter fw = null;
+		try {
+			raf = new RandomAccessFile("config.dat", "rw");
 			raf.readLine();
 			raf.readLine();
 			raf.readLine();
-			String str = new String(textPeriod.getText() + "\r"
-					+ choPeriodUnit.getSelectedItem() + "\r"
-					+ choPeriodUnit.getSelectedIndex() + "\r"
-					+ raf.readLine() + "\r");
-			raf.close();
-			FileWriter fw = new FileWriter("config.dat");
+			String str = new String(textPeriod.getText() + "\r" + choPeriodUnit.getSelectedItem() + "\r"
+					+ choPeriodUnit.getSelectedIndex() + "\r" + raf.readLine() + "\r");
+			fw = new FileWriter("config.dat");
 			fw.write(str);
-			fw.close();
-		}
-		catch(IOException e)
-		{
-			System.out.print("Read File Error"+e);
+		} catch (IOException e) {
+			System.out.print("Read File Error" + e);
+		} finally {
+			try {
+				raf.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				fw.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
