@@ -10,7 +10,6 @@ public class Runa implements Runnable {
 			dfa.run(iNodeID);
 			if (NodeTemperaMonitor.net.node[iNodeID - 1].iVerID != dfa.getNode().iVerID) {
 				NodeTemperaMonitor.net.node[iNodeID - 1] = dfa.getNode();
-				dfa = null;
 			}
 		}
 	}
@@ -20,7 +19,6 @@ public class Runa implements Runnable {
 			DataFileAccess dfa = new DataFileAccess();
 			dfa.run(iNodeID);
 			NodeTemperaMonitor.net.node[iNodeID - 1] = dfa.getNode();
-			dfa = null;
 		}
 	}
 }

@@ -6,26 +6,33 @@ import java.io.RandomAccessFile;
 import net.neiljudson.nodemodel.Node;
 
 public class DataFileAccess {
-	private Node node = new Node();
+	private Node node = null;
 
 	public Node getNode() {
 		return node;
 	}
 
 	public void run(int iNodeID) {
-		String strTemp = new String();
+		RandomAccessFile raf = null;
+		String strTemp = null;
+		node = new Node();
 		try {
-			RandomAccessFile raf = new RandomAccessFile("data/" + iNodeID + ".dat", "r");
+			raf = new RandomAccessFile("data/" + iNodeID + ".dat", "r");
 			while ((strTemp = raf.readLine()) != null) {
 				node.addData(strTemp.split(" "));
-//				node.addData(strTemp.substring(0, 10),
-//						strTemp.substring(11, 19),
-//						Integer.valueOf(strTemp.substring(20)));
+				// node.addData(strTemp.substring(0, 10),
+				// strTemp.substring(11, 19),
+				// Integer.valueOf(strTemp.substring(20)));
 			}
-			raf.close();
 		} catch (IOException e) {
 			System.out.print("Read File Error" + e);
+		} finally {
+			try {
+				raf.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-		strTemp = null;
 	}
 }

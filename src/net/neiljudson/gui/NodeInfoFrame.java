@@ -24,7 +24,7 @@ public class NodeInfoFrame extends JFrame implements ActionListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	private static final int NODE_INFO_WIDTH = 530;
 	private static final int NODE_INFO_HEIGHT = 450;
 	private static final int PANEL_BUTTON_WIDTH = 500;
@@ -34,9 +34,9 @@ public class NodeInfoFrame extends JFrame implements ActionListener {
 	static final int PANEL_GRAPH_WIDTH = 500;
 	static final int PANEL_GRAPH_HEIGHT = 350;
 
-	private int iNodeID = 0; 
+	private int iNodeID = 0;
 	private JPanel panelGraph = null;
-	
+
 	public NodeInfoFrame(int iNodeID) {
 		this.iNodeID = iNodeID;
 
@@ -75,7 +75,7 @@ public class NodeInfoFrame extends JFrame implements ActionListener {
 
 		setVisible(true);
 	}
-	
+
 	private void drawLineGraph() {
 		LineGraphPanel panelLineGraph = new LineGraphPanel(iNodeID);
 		panelLineGraph.setBounds(0, 0, PANEL_GRAPH_WIDTH, PANEL_GRAPH_HEIGHT);
@@ -83,7 +83,6 @@ public class NodeInfoFrame extends JFrame implements ActionListener {
 		panelGraph.removeAll();
 		panelGraph.add(panelLineGraph);
 		panelGraph.repaint();
-		panelLineGraph = null;
 	}
 
 	private void drawPieGraph() {
@@ -93,7 +92,6 @@ public class NodeInfoFrame extends JFrame implements ActionListener {
 		panelGraph.removeAll();
 		panelGraph.add(panelPieGraph);
 		panelGraph.repaint();
-		panelPieGraph = null;
 	}
 
 	@Override
@@ -111,27 +109,19 @@ class LineGraphPanel extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	private static final int ORIGIN_POINT_X = 25;
 	private static final int ORIGIN_POINT_Y = PANEL_GRAPH_HEIGHT - 1 - 25;
 	private static final int X_AXIS_LENGTH = 435;
 	private static final int Y_AXIS_LENGTH = 285;
 	private static final int X_AXIS_END_X = ORIGIN_POINT_X + X_AXIS_LENGTH - 1;
 	private static final int Y_AXIS_END_Y = ORIGIN_POINT_Y - Y_AXIS_LENGTH + 1;
-	
+
 	private int iNodeID = 0;
-	
-	private String[] arrow = {
-			"*........",
-			".**......",
-			"..***....",
-			"...****..",
-			"*********",
-			"...****..",
-			"..***....",
-			".**......",
-			"*........" };
-	
+
+	private String[] arrow = { "*........", ".**......", "..***....", "...****..", "*********", "...****..",
+			"..***....", ".**......", "*........" };
+
 	public LineGraphPanel(int iNodeID) {
 		this.iNodeID = iNodeID;
 	}
@@ -161,14 +151,11 @@ class LineGraphPanel extends JPanel {
 		}
 		// draw scale
 		for (int i = 0; i < 24; i++) {
-			g.drawLine(ORIGIN_POINT_X + 10 + i * 18, ORIGIN_POINT_Y,
-					ORIGIN_POINT_X + 10 + i * 18, ORIGIN_POINT_Y + 2);
+			g.drawLine(ORIGIN_POINT_X + 10 + i * 18, ORIGIN_POINT_Y, ORIGIN_POINT_X + 10 + i * 18, ORIGIN_POINT_Y + 2);
 			if (i > 9)
-				g.drawString(Integer.toString(i), ORIGIN_POINT_X + 5 + i * 18,
-						ORIGIN_POINT_Y + 15);
+				g.drawString(Integer.toString(i), ORIGIN_POINT_X + 5 + i * 18, ORIGIN_POINT_Y + 15);
 			else
-				g.drawString(Integer.toString(i), ORIGIN_POINT_X + 8 + i * 18,
-						ORIGIN_POINT_Y + 15);
+				g.drawString(Integer.toString(i), ORIGIN_POINT_X + 8 + i * 18, ORIGIN_POINT_Y + 15);
 		}
 		g.drawString("Ê±", X_AXIS_END_X + 15, ORIGIN_POINT_Y + 4);
 
@@ -187,25 +174,26 @@ class LineGraphPanel extends JPanel {
 		}
 		// draw scale
 		for (int i = 0; i < 10; i++) {
-			g.drawLine(ORIGIN_POINT_X, ORIGIN_POINT_Y - i * 30,
-					ORIGIN_POINT_X - 2, ORIGIN_POINT_Y - i * 30);
+			g.drawLine(ORIGIN_POINT_X, ORIGIN_POINT_Y - i * 30, ORIGIN_POINT_X - 2, ORIGIN_POINT_Y - i * 30);
 			if (i > 0)
-				g.drawString(Integer.toString(i * 10), ORIGIN_POINT_X - 16,
-						ORIGIN_POINT_Y + 5 - i * 30);
+				g.drawString(Integer.toString(i * 10), ORIGIN_POINT_X - 16, ORIGIN_POINT_Y + 5 - i * 30);
 			else
-				g.drawString(" " + Integer.toString(i * 10),
-						ORIGIN_POINT_X - 16, ORIGIN_POINT_Y + 5 - i * 30);
+				g.drawString(" " + Integer.toString(i * 10), ORIGIN_POINT_X - 16, ORIGIN_POINT_Y + 5 - i * 30);
 		}
 		g.drawString("ÎÂ¶È/¡æ", ORIGIN_POINT_X - 20, Y_AXIS_END_Y - 15);
-		
+
 		/* draw line */
 		int k = NodeTemperaMonitor.net.node[iNodeID - 1].iNum - 1;
 		for (int i = 0; i < k; i++) {
-			g.drawLine(ORIGIN_POINT_X + 10 + i * 18, ORIGIN_POINT_Y - NodeTemperaMonitor.net.node[iNodeID - 1].aliTempera.get(i) * 3,
-					ORIGIN_POINT_X + 10 + (i + 1) * 18, ORIGIN_POINT_Y - NodeTemperaMonitor.net.node[iNodeID - 1].aliTempera.get(i + 1) * 3);
-			drawSquarePoint(g, ORIGIN_POINT_X + 10 + i * 18, ORIGIN_POINT_Y - NodeTemperaMonitor.net.node[iNodeID - 1].aliTempera.get(i) * 3, 3);
+			g.drawLine(ORIGIN_POINT_X + 10 + i * 18,
+					ORIGIN_POINT_Y - NodeTemperaMonitor.net.node[iNodeID - 1].aliTempera.get(i) * 3,
+					ORIGIN_POINT_X + 10 + (i + 1) * 18,
+					ORIGIN_POINT_Y - NodeTemperaMonitor.net.node[iNodeID - 1].aliTempera.get(i + 1) * 3);
+			drawSquarePoint(g, ORIGIN_POINT_X + 10 + i * 18,
+					ORIGIN_POINT_Y - NodeTemperaMonitor.net.node[iNodeID - 1].aliTempera.get(i) * 3, 3);
 		}
-		drawSquarePoint(g, ORIGIN_POINT_X + 10 + k * 18, ORIGIN_POINT_Y - NodeTemperaMonitor.net.node[iNodeID - 1].aliTempera.get(k) * 3, 3);
+		drawSquarePoint(g, ORIGIN_POINT_X + 10 + k * 18,
+				ORIGIN_POINT_Y - NodeTemperaMonitor.net.node[iNodeID - 1].aliTempera.get(k) * 3, 3);
 	}
 }
 
@@ -214,7 +202,7 @@ class PieGraphPanel extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	private static final int RADIUS = 120;
 	private static final int DIAMETER = RADIUS * 2;
 	private static final int CENTRAL_POINT_X = PANEL_GRAPH_WIDTH / 2 - 80;
@@ -225,13 +213,13 @@ class PieGraphPanel extends JPanel {
 	private static final int LEGEND_Y = 100;
 	private static final int LEGEND_WIDTH = 36;
 	private static final int LEGEND_HEIGHT = 14;
-	
+
 	private int iNodeID = 0;
-	
+
 	public PieGraphPanel(int iNodeID) {
 		this.iNodeID = iNodeID;
 	}
-	
+
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
@@ -241,9 +229,8 @@ class PieGraphPanel extends JPanel {
 		g.setFont(f);
 
 		double[] arriCount = count();
-		Color[] arrColor = { Color.decode("#fec64e"), Color.decode("#fe9c34"),
-				Color.decode("#fe661a"), Color.decode("#ff3c19"),
-				Color.decode("#fe0501") };
+		Color[] arrColor = { Color.decode("#fec64e"), Color.decode("#fe9c34"), Color.decode("#fe661a"),
+				Color.decode("#ff3c19"), Color.decode("#fe0501") };
 		int startAngle = 0;
 		int angle = 0;
 		String[] arrstrLegend = { "  < 30 ¡æ", "  30 ~ 40 ¡æ", "  40 ~ 50 ¡æ", "  50 ~ 60 ¡æ", "  > 60 ¡æ" };
@@ -252,14 +239,13 @@ class PieGraphPanel extends JPanel {
 				break;
 			g.setColor(arrColor[i]);
 			angle = (int) (arriCount[i] * 360);
-			g.fillArc(ORIGIN_POINT_X, ORIGIN_POINT_Y, DIAMETER, DIAMETER,
-					startAngle, angle);
+			g.fillArc(ORIGIN_POINT_X, ORIGIN_POINT_Y, DIAMETER, DIAMETER, startAngle, angle);
 			startAngle = startAngle + angle;
 			g.fillRect(LEGEND_X, LEGEND_Y + i * 40, LEGEND_WIDTH, LEGEND_HEIGHT);
 			g.setColor(Color.BLACK);
 			g.drawString(arrstrLegend[i], LEGEND_X + LEGEND_WIDTH, LEGEND_Y + i * 40 + LEGEND_HEIGHT);
 		}
-		
+
 		startAngle = 0;
 		for (int i = 0; i < 5; i++) {
 			if (arriCount[i] == 0)
@@ -270,8 +256,7 @@ class PieGraphPanel extends JPanel {
 					CENTRAL_POINT_X + (int) Math.floor((RADIUS * cosAngle(startAngle))),
 					CENTRAL_POINT_Y - (int) Math.floor((RADIUS * sinAngle(startAngle))));
 			g.setColor(Color.BLACK);
-			g.drawString(
-					Math.floor(arriCount[i] * 10000) / 100 + "%",
+			g.drawString(Math.floor(arriCount[i] * 10000) / 100 + "%",
 					CENTRAL_POINT_X + (int) Math.floor(((RADIUS + 20) * cosAngle(startAngle + angle / 2))),
 					CENTRAL_POINT_Y - (int) Math.floor(((RADIUS + 20) * sinAngle(startAngle + angle / 2))));
 			startAngle = startAngle + angle;

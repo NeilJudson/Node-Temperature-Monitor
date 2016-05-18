@@ -20,7 +20,7 @@ public class ConfThresholdFrame extends JFrame implements ActionListener {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private Choice choThreshold = new Choice();
+	private Choice choThreshold = null;
 
 	public ConfThresholdFrame() {
 		setSize(250, 150);
@@ -35,11 +35,12 @@ public class ConfThresholdFrame extends JFrame implements ActionListener {
 		JLabel label = new JLabel("报警温度阀值");
 		label.setBounds(10, 0, 90, 50);
 
+		choThreshold = new Choice();
 		choThreshold.setBounds(100, 15, 40, 50);
 		for (int i = 60; i < 121; i++) {
 			choThreshold.add(String.valueOf(i));
 		}
-		
+
 		JButton jb = new JButton("确定");
 		jb.setBounds(75, 60, 60, 30);
 		jb.addActionListener(this);
@@ -54,17 +55,29 @@ public class ConfThresholdFrame extends JFrame implements ActionListener {
 	}
 
 	private void config() {
+		RandomAccessFile raf = null;
+		FileWriter fw = null;
 		try {
-			RandomAccessFile raf = new RandomAccessFile("config.dat", "rw");
-			String str = new String(raf.readLine() + "\r" + raf.readLine()
-					+ "\r" + raf.readLine() + "\r"
+			raf = new RandomAccessFile("config.dat", "rw");
+			String str = new String(raf.readLine() + "\r" + raf.readLine() + "\r" + raf.readLine() + "\r"
 					+ choThreshold.getSelectedItem() + "\r");
-			raf.close();
-			FileWriter fw = new FileWriter("config.dat");
+			fw = new FileWriter("config.dat");
 			fw.write(str);
-			fw.close();
 		} catch (IOException e) {
 			System.out.print("Read File Error" + e);
+		} finally {
+			try {
+				raf.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				fw.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 

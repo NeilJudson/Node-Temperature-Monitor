@@ -31,17 +31,22 @@ public class MainInterfaceFrame extends JFrame implements ActionListener, ItemLi
 	 */
 	private static final long serialVersionUID = 1L;
 
+	private JMenuItem query_Query = null;
+	private JMenuItem conf_Period = null;
+	private JMenuItem conf_Threshold = null;
+	private JMenuItem help_About = null;
+
 	private static String strNetID = "1";
 
 	private JButton butRefresh = null;
 
 	private JPanel panelPeriod = null;
-	private String strPeriod = new String();
-	private String strPeriodUnit = new String();
-	private String strPeriodUnitNum = new String();
+	private String strPeriod = null;
+	private String strPeriodUnit = null;
+	private String strPeriodUnitNum = null;
 
 	private JPanel panelThreshold = null;
-	private String strThreshold = new String();
+	private String strThreshold = null;
 
 	private JPanel panelSysSta = null;
 
@@ -61,11 +66,10 @@ public class MainInterfaceFrame extends JFrame implements ActionListener, ItemLi
 		JMenu menuHelp = new JMenu("帮助");
 		JMenu menuQuery = new JMenu("查询");
 
-		JMenuItem query_Query = new JMenuItem("查询");
-		JMenuItem conf_Period = new JMenuItem("配置刷新周期");
-		JMenuItem conf_Threshold = new JMenuItem("配置报警温度阀值");
-		JMenuItem help_About = new JMenuItem("关于节点温度监测器");
-
+		query_Query = new JMenuItem("查询");
+		conf_Period = new JMenuItem("配置刷新周期");
+		conf_Threshold = new JMenuItem("配置报警温度阀值");
+		help_About = new JMenuItem("关于节点温度监测器");
 		query_Query.addActionListener(this);
 		conf_Period.addActionListener(this);
 		conf_Threshold.addActionListener(this);
@@ -144,15 +148,22 @@ public class MainInterfaceFrame extends JFrame implements ActionListener, ItemLi
 	}
 
 	public void updatePeriodPanel() {
+		RandomAccessFile raf = null;
 		try {
-			RandomAccessFile raf = new RandomAccessFile("config.dat", "r");
+			raf = new RandomAccessFile("config.dat", "r");
 			strPeriod = raf.readLine();
 			strPeriodUnit = raf.readLine();
-			raf.close();
 		} catch (IOException e) {
 			System.out.print("Read File Error" + e);
+		} finally {
+			try {
+				raf.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-		JLabel labPeriod = new JLabel("温度报告周期" + "   " + strPeriod + " " + strPeriodUnit);
+		JLabel labPeriod = new JLabel("温度报告周期   " + strPeriod + " " + strPeriodUnit);
 		labPeriod.setBounds(0, 0, 200, 50);
 		panelPeriod.removeAll();
 		panelPeriod.add(labPeriod);
@@ -160,17 +171,24 @@ public class MainInterfaceFrame extends JFrame implements ActionListener, ItemLi
 	}
 
 	public void updateThresholdPanel() {
+		RandomAccessFile raf = null;
 		try {
-			RandomAccessFile raf = new RandomAccessFile("config.dat", "r");
+			raf = new RandomAccessFile("config.dat", "r");
 			raf.readLine();
 			raf.readLine();
 			raf.readLine();
 			strThreshold = raf.readLine();
-			raf.close();
 		} catch (IOException e) {
 			System.out.print("Read File Error" + e);
+		} finally {
+			try {
+				raf.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-		JLabel labThreshold = new JLabel("报警温度阀值" + "   " + strThreshold + " " + "℃");
+		JLabel labThreshold = new JLabel("报警温度阀值   " + strThreshold + " ℃");
 		labThreshold.setBounds(0, 0, 200, 50);
 		panelThreshold.removeAll();
 		panelThreshold.add(labThreshold);
@@ -186,7 +204,8 @@ public class MainInterfaceFrame extends JFrame implements ActionListener, ItemLi
 				flag = i;
 			}
 		}
-		JLabel labMaxTem = new JLabel("最高温度   节点" + strNetID + "-" + (flag + 1) + "  " + iMaxTempera + "℃");
+		JLabel labMaxTem = new JLabel(
+				"最高温度   节点" + strNetID + "-" + String.valueOf(flag + 1) + "  " + String.valueOf(iMaxTempera) + "℃");
 		labMaxTem.setBounds(0, 0, 250, 50);
 		JLabel labStaSys;
 		if (Integer.valueOf(strThreshold) < iMaxTempera) {
@@ -204,7 +223,7 @@ public class MainInterfaceFrame extends JFrame implements ActionListener, ItemLi
 
 	private void updateTemperaPanel() {
 		label = new JLabel[NODE_NUM];
-		String strNodeID = new String();
+		String strNodeID = null;
 		JPanel panelTemp = new JPanel();
 		panelTemp.setLayout(null);
 		panelTemp.setBounds(0, 0, 500, 200);
@@ -227,11 +246,9 @@ public class MainInterfaceFrame extends JFrame implements ActionListener, ItemLi
 				label[n].addMouseListener(this);
 			}
 		}
-		strNodeID = null;
 		panelTempera.removeAll();
 		panelTempera.add(panelTemp);
 		panelTempera.repaint();
-		panelTemp = null;
 	}
 
 	static String getNetID() {
@@ -247,7 +264,6 @@ public class MainInterfaceFrame extends JFrame implements ActionListener, ItemLi
 		updateSysStaPanel();
 		updateTemperaPanel();
 		butRefresh.enable(true);
-
 	}
 
 	public MainInterfaceFrame_TimerTask task = new MainInterfaceFrame_TimerTask() {
@@ -259,14 +275,21 @@ public class MainInterfaceFrame extends JFrame implements ActionListener, ItemLi
 	public Timer timer = new Timer();
 
 	public int timedRefresh() {
+		RandomAccessFile raf = null;
 		try {
-			RandomAccessFile raf = new RandomAccessFile("config.dat", "r");
+			raf = new RandomAccessFile("config.dat", "r");
 			strPeriod = raf.readLine();
 			strPeriodUnit = raf.readLine();
 			strPeriodUnitNum = raf.readLine();
-			raf.close();
 		} catch (IOException e) {
 			System.out.print("Read File Error" + e);
+		} finally {
+			try {
+				raf.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		int i = 0;
 		int j = Integer.valueOf(strPeriod);
@@ -290,19 +313,19 @@ public class MainInterfaceFrame extends JFrame implements ActionListener, ItemLi
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		if (e.getActionCommand().equals("查询")) {
+		if (e.getSource() == query_Query) {
 			new QueryFrame();
 		}
-		if (e.getActionCommand().equals("配置刷新周期")) {
+		if (e.getSource() == conf_Period) {
 			new ConfPeriodFrame();
 		}
-		if (e.getActionCommand().equals("配置报警温度阀值")) {
+		if (e.getSource() == conf_Threshold) {
 			new ConfThresholdFrame();
 		}
-		if (e.getActionCommand().equals("关于节点温度监测器")) {
+		if (e.getSource() == help_About) {
 			new AboutFrame();
 		}
-		if (e.getActionCommand().equals("刷新")) {
+		if (e.getSource() == butRefresh) {
 			this.refresh();
 		}
 	}
